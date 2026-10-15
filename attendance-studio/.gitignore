@@ -1,0 +1,9 @@
+.venv/
+node_modules/
+frontend/dist/
+__pycache__/
+.env
+.venv-desktop/
+build/
+dist/
+*.spec

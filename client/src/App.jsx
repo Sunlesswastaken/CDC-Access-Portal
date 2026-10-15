@@ -1,12 +1,45 @@
-function App() {
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import RoleRoute from './components/RoleRoute.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
+import AdminDashboard from './pages/AdminDashboard.jsx'
+import FacultyDashboard from './pages/FacultyDashboard.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import StudentDashboard from './pages/StudentDashboard.jsx'
+
+export default function App() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-100">
-      <div className="text-center">
-        <h1 className="text-3xl font-semibold">Mini MERN Auth</h1>
-        <p className="mt-2 text-slate-400">Scaffold ready. Login page comes in Phase 5.</p>
-      </div>
-    </main>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <RoleRoute allow={['admin']}>
+                <AdminDashboard />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/faculty"
+            element={
+              <RoleRoute allow={['faculty']}>
+                <FacultyDashboard />
+              </RoleRoute>
+            }
+          />
+          <Route
+            path="/student"
+            element={
+              <RoleRoute allow={['student']}>
+                <StudentDashboard />
+              </RoleRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
-
-export default App
