@@ -5,11 +5,9 @@ node_modules/
 
 # Environment variables & local secrets
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
 *.env
+!.env.example
 
 # Production build outputs
 dist/
