@@ -45,7 +45,8 @@ const userSchema = new mongoose.Schema(
     },
     studentQrId: {
       type: String,
-      unique: true,
+      // Only students get a QR id. The partial index means faculty/admin
+      // documents (which have no studentQrId) are not indexed at all.
       index: {
         unique: true,
         partialFilterExpression: { studentQrId: { $exists: true } },
@@ -76,8 +77,9 @@ userSchema.pre('validate', function assignStudentFields() {
       this.studentQrId = `STU-${crypto.randomUUID()}`
     }
   } else {
-    this.rollNumber = undefined
-    this.studentQrId = undefined
+    // Unset (not just undefined) so the fields are never written to the DB.
+    this.set('rollNumber', undefined)
+    this.set('studentQrId', undefined)
   }
 })
 
