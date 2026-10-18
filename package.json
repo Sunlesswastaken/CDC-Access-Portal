@@ -11,6 +11,7 @@
     "build": "npm run build --prefix client",
     "start": "npm run start --prefix server",
     "seed:admin": "npm run seed:admin --prefix server",
-    "seed:demo-student": "npm run seed:demo-student --prefix server"
+    "seed:demo-student": "npm run seed:demo-student --prefix server",
+    "seed:demo-faculty": "npm run seed:demo-faculty --prefix server"
   }
 }

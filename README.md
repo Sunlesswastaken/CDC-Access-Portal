@@ -111,13 +111,23 @@ The script creates the Admin only if one with that email does not already exist 
 
 ### Demo credentials
 
-Set your own values in `server/.env` before seeding and share them with reviewers safely (for example in the submission message, not in code). Using the `.env.example` placeholders, the local demo login is:
+The project ships with optional demo accounts for every role, so reviewers can log in as Faculty and Student without creating accounts first. Seed them with:
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@example.com` | `ChangeMe123!` |
+```bash
+# from the server/ directory (or `npm run seed:demo-student` / `seed:demo-faculty` from the root)
+npm run seed:demo-student   # student@example.com / Student123!
+npm run seed:demo-faculty   # faculty@example.com / Faculty123!
+```
 
-Accounts created through the Admin dashboard are stored in your own MongoDB and are not part of this repository. **Do not commit `.env` or real passwords.**
+Demo logins (using the default seed values):
+
+| Role | Email | Password | Notes |
+|---|---|---|---|
+| Admin | `admin@example.com` | `ChangeMe123!` | From `npm run seed:admin` (`ADMIN_EMAIL` / `ADMIN_PASSWORD` in `server/.env`) |
+| Faculty | `faculty@example.com` | `Faculty123!` | Seeded by `npm run seed:demo-faculty` |
+| Student | `student@example.com` | `Student123!` | Roll number `DEMO-001`, has a QR code; seeded by `npm run seed:demo-student` |
+
+All demo values can be overridden with `DEMO_FACULTY_*` / `DEMO_STUDENT_*` environment variables (see the seed scripts). These are intentionally simple demo credentials for a throwaway database — never reuse them for anything real, and **do not commit `.env` or real passwords.**
 
 ## API Endpoints
 
