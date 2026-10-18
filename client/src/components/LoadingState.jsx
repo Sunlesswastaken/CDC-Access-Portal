@@ -7,7 +7,7 @@ export default function LoadingState({ label = 'Loading…' }) {
           aria-hidden="true"
           className="size-4 animate-spin rounded-full border-2 border-line border-t-navy"
         />
-        <span className="font-mono text-xs uppercase tracking-[0.16em]">{label}</span>
+        <span className="text-xs uppercase tracking-[0.16em]">{label}</span>
       </div>
     </div>
   )

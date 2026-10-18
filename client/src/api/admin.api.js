@@ -18,3 +18,7 @@ export function createStudent({ name, email, password, rollNumber }) {
 export function listStudents() {
   return apiFetch('/api/admin/students')
 }
+
+export function getStats() {
+  return apiFetch('/api/admin/stats')
+}

@@ -37,3 +37,6 @@ coverage/
 
 # Misc
 .cache/
+
+# Local demo recording (not part of the app)
+demo-video/

@@ -44,6 +44,14 @@ export async function apiFetch(path, { method = 'GET', body, token } = {}) {
     /* empty body */
   }
 
+  // The token we sent was rejected: it has expired or is no longer valid.
+  // Drop it and tell the auth context so the app logs the user out instead of
+  // leaving a stale "signed in" screen that only fails on every API call.
+  if (response.status === 401 && authToken) {
+    setToken(null)
+    window.dispatchEvent(new Event('auth:session-expired'))
+  }
+
   if (!response.ok) {
     throw new ApiError(data?.message || 'Something went wrong', response.status)
   }

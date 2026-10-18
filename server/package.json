@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
-    "seed:admin": "node src/scripts/seedAdmin.js"
+    "seed:admin": "node src/scripts/seedAdmin.js",
+    "seed:demo-student": "node src/scripts/seedDemoStudent.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

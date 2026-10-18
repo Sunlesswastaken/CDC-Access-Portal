@@ -1,63 +1,43 @@
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   Self-hosted fonts (SIL Open Font License — see client/public/fonts)
-   Chakra Petch: institutional display   Geist Mono: technical labels
+   Self-hosted font (SIL Open Font License — see client/public/fonts)
+   Inter only: the UI is strictly sans-serif — no monospace or serif fonts.
+   Matches the Obsidian UI analytics-dashboard block typography.
 --------------------------------------------------------------------------- */
 @font-face {
-  font-family: 'Chakra Petch';
-  src: url('/fonts/chakra-petch-400.ttf') format('truetype');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Chakra Petch';
-  src: url('/fonts/chakra-petch-500.ttf') format('truetype');
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Chakra Petch';
-  src: url('/fonts/chakra-petch-600.ttf') format('truetype');
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Chakra Petch';
-  src: url('/fonts/chakra-petch-700.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/geist-mono-latin.woff2') format('woff2');
+  font-family: 'Inter';
+  src: url('/fonts/inter-latin.woff2') format('woff2');
   font-weight: 100 900;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/geist-mono-latin-ext.woff2') format('woff2');
-  font-weight: 100 900;
+  font-style: normal;
   font-display: swap;
 }
 
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* Sans-only app: even a stray `font-mono` utility renders the sans stack. */
+  --font-mono: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  --color-canvas: #f6f8fb;
+  --color-canvas: #f6f7fb;
   --color-surface: #ffffff;
-  --color-ink: #0b1220;
-  --color-muted: #5a6b80;
-  --color-line: #dbe3ec;
-  --color-line-soft: #eef2f7;
+  --color-ink: #10264a;
+  --color-muted: #5b6b86;
+  --color-line: #dde3ee;
+  --color-line-soft: #eef1f8;
 
-  --color-navy: #005094;
-  --color-navy-hover: #0f62ac;
-  --color-navy-deep: #013a6b;
+  --color-navy: #1d3a6b;
+  --color-navy-hover: #26467d;
+  --color-navy-deep: #0f2547;
+  --color-indigo: #4f46e5;
+  --color-indigo-hover: #4338ca;
   --color-gold: #d2ae6d;
   --color-teal: #55bcb6;
+}
+
+:root {
+  /* Consumed by the Obsidian UI analytics-dashboard block. */
+  --font-inter: 'Inter';
 }
 
 @layer base {
@@ -74,11 +54,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
   ::selection {
-    background: var(--color-navy-hover);
+    background: var(--color-indigo);
     color: #fff;
   }
   :focus-visible {
-    outline: 3px solid color-mix(in srgb, var(--color-navy-hover) 40%, transparent);
+    outline: 3px solid color-mix(in srgb, var(--color-indigo) 38%, transparent);
     outline-offset: 2px;
   }
 }
@@ -116,6 +96,88 @@
   animation: descend-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* ---------------------------------------------------------------------------
+   Shared UI primitives — mirrors the Obsidian UI analytics-dashboard block
+   tokens (Inter, neutral ink, accent blue) so the login screen and the
+   dashboard read as one product.
+--------------------------------------------------------------------------- */
+:root {
+  --ui-ink: 16 38 74;
+  --ui-accent: #4f46e5;
+  --ui-bad: #dc2626;
+  --ui-good: #16a34a;
+}
+
+.ui-kicker {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(var(--ui-ink) / 0.45);
+}
+
+.ui-card {
+  padding: 32px;
+  border: 1px solid rgb(var(--ui-ink) / 0.06);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 80px -40px rgb(var(--ui-ink) / 0.35);
+}
+
+.ui-field-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgb(var(--ui-ink) / 0.55);
+}
+
+.ui-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 9px;
+  outline: none;
+  font-size: 14.5px;
+  color: rgb(var(--ui-ink) / 0.92);
+  background: rgb(var(--ui-ink) / 0.045);
+  box-shadow: inset 0 0 0 1px rgb(var(--ui-ink) / 0.07);
+  transition:
+    box-shadow var(--duration-quick, 150ms) ease,
+    background-color var(--duration-quick, 150ms) ease;
+}
+.ui-input::placeholder {
+  color: rgb(var(--ui-ink) / 0.38);
+}
+.ui-input:focus-visible {
+  background: rgb(var(--ui-ink) / 0.06);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ui-accent) 65%, transparent);
+}
+.ui-input[aria-invalid='true'] {
+  box-shadow: inset 0 0 0 1px rgba(240, 75, 75, 0.6);
+}
+
+.ui-hint {
+  font-size: 12.5px;
+  color: rgb(var(--ui-ink) / 0.4);
+}
+.ui-hint[data-error='true'] {
+  color: var(--ui-bad);
+}
+
+.ui-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ui-bad);
+  background: color-mix(in oklab, var(--ui-bad) 10%, #fff);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--ui-bad) 28%, transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
   .animate-descend {
@@ -126,5 +188,136 @@
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Morphing button — src/components/ui/3d-button.tsx
+   Adapted from the 21st.dev "3D button". The upstream component ships only its
+   @keyframes, so the base styles below were authored by hand as a flat variant:
+   no drop shadow and no 3D perspective/rotation. Everything is scoped under
+   .morph-btn so nothing leaks into the rest of the app.
+
+   Only the keyframes the flat variant uses are kept (the character morph).
+   The 3D-only rules (splash lines, border `path` drawing, rotating arrow
+   lines, reset) were dropped along with the 3D styles they belonged to.
+   The hover arrow was also removed; the label morphs into its hover state
+   on hover/focus.
+--------------------------------------------------------------------------- */
+@keyframes charAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(60%);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-12%);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes charDisappear {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-55%);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-70%);
+    filter: blur(8px);
+  }
+}
+
+.morph-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: var(--ui-accent);
+  box-shadow: none;
+  transition: background-color 160ms ease;
+}
+.morph-btn:not(:disabled):hover,
+.morph-btn:not(:disabled):focus-visible {
+  background: var(--color-indigo-hover);
+}
+.morph-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.morph-btn .wrap {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+}
+
+.morph-btn .content {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.morph-btn .chars {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.morph-btn .chars .c {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Character morph — on hover/focus the label swaps for the second state. */
+.morph-btn .chars.state-2 .c {
+  opacity: 0;
+}
+.morph-btn:not(:disabled):hover .chars.state-1 .c,
+.morph-btn:not(:disabled):focus-visible .chars.state-1 .c {
+  animation: charDisappear 0.32s ease both;
+  animation-delay: calc(var(--i) * 22ms);
+}
+.morph-btn:not(:disabled):hover .chars.state-2 .c,
+.morph-btn:not(:disabled):focus-visible .chars.state-2 .c {
+  animation: charAppear 0.5s ease both;
+  animation-delay: calc(var(--i) * 22ms + 110ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .morph-btn:not(:disabled):hover .chars.state-1 .c,
+  .morph-btn:not(:disabled):focus-visible .chars.state-1 .c {
+    opacity: 0;
+    animation: none;
+  }
+  .morph-btn:not(:disabled):hover .chars.state-2 .c,
+  .morph-btn:not(:disabled):focus-visible .chars.state-2 .c {
+    opacity: 1;
+    animation: none;
   }
 }

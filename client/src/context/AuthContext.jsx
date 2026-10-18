@@ -33,6 +33,16 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
+  // Fired by the API client when the server rejects our token mid-session.
+  // Clearing the user makes the route guards redirect to /login.
+  useEffect(() => {
+    function handleSessionExpired() {
+      setUser(null)
+    }
+    window.addEventListener('auth:session-expired', handleSessionExpired)
+    return () => window.removeEventListener('auth:session-expired', handleSessionExpired)
+  }, [])
+
   async function login(email, password) {
     const { token, user: loggedInUser } = await authApi.login(email, password)
     setToken(token)

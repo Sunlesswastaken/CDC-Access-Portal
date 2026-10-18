@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   createFaculty,
   createStudent,
+  getStats,
   listFaculty,
   listStudents,
 } from '../controllers/admin.controller.js'
@@ -16,5 +17,6 @@ router.post('/faculty', createFaculty)
 router.get('/faculty', listFaculty)
 router.post('/students', createStudent)
 router.get('/students', listStudents)
+router.get('/stats', getStats)
 
 export default router

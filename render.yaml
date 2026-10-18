@@ -1,0 +1,20 @@
+# Render blueprint: one web service that builds the React client and serves
+# it together with the Express API from a single URL.
+services:
+  - type: web
+    name: mini-mern-auth
+    runtime: node
+    plan: free
+    buildCommand: npm install --prefix server && npm install --prefix client && npm run build --prefix client
+    startCommand: npm run start --prefix server
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false # set manually in the Render dashboard (MongoDB Atlas)
+      - key: JWT_SECRET
+        generateValue: true # auto-generated secret, no need to invent one
+      - key: ADMIN_EMAIL
+        sync: false # set manually (initial admin login)
+      - key: ADMIN_PASSWORD
+        sync: false # set manually (initial admin login)
