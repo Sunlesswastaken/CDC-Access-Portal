@@ -1,4 +1,4 @@
-# CDC Portal — Mini MERN Authentication & Role-Based Dashboard
+# CDC Access Portal — Mini MERN Authentication & Role-Based Dashboard
 
 A small MERN application built for the **CDC Developer Selection Assignment**. It demonstrates authentication, role-based access control, account management, and a clean React UI with three roles: **Admin**, **Faculty**, and **Student**.
 
