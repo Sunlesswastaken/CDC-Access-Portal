@@ -5,7 +5,9 @@ services:
     name: mini-mern-auth
     runtime: node
     plan: free
-    buildCommand: npm install --prefix server && npm install --prefix client && npm run build --prefix client
+    # --include=dev is required: NODE_ENV=production is set for the service,
+    # which would otherwise make npm skip devDependencies (vite lives there).
+    buildCommand: npm install --prefix server --include=dev && npm install --prefix client --include=dev && npm run build --prefix client
     startCommand: npm run start --prefix server
     envVars:
       - key: NODE_ENV
